@@ -1,4 +1,10 @@
+'''
 
+See also:
+
+- <https://combine-lab.github.io/alevin-tutorial/2019/selective-alignment/>
+
+'''
 
 from ruffus import *
 from cgatcore import pipeline as P
@@ -41,6 +47,24 @@ def download_transcriptome(outfile):
     log = outfile.replace('.fa.gz', '.log')
     
     statement = '''wget %(url)s -O %(outfile)s > %(log)s'''
+    
+    P.run(statement, to_cluster=False)
+
+
+@merge(download_genome, 'resources/decoys.txt')
+def decoys(infiles, outfile):
+    '''
+    Salmon indexing requires the names of the genome targets, which is extractable by using the grep command.
+    '''
+    
+    genome = infiles[0]
+    
+    log = outfile.replace('.fa.gz', '.log')
+    
+    statement = '''grep "^>" <(gunzip -c %(genome)s) |
+        cut -d " " -f 1 |
+        sed -e 's/>//g' > %(outfile)s
+        '''
     
     P.run(statement, to_cluster=False)
 

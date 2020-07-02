@@ -1,3 +1,4 @@
-*.log
-*.fa.gz
-.ipynb_checkpoints
+pipeline.log
+resources/
+
+.ipynb_checkpoints/
