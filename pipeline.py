@@ -85,18 +85,21 @@ def concatenate_genome_transcriptome(infiles, outfile):
     P.run(statement, to_cluster=False)
 
 
-@merge([concatenate_genome_transcriptome, decoys], 'resources/salmon_index')
+@merge([concatenate_genome_transcriptome, decoys], 'resources/salmon_index/mphf.bin')
 def salmon_index(infiles, outfile):
     '''
     Along with the list of decoys salmon also needs the concatenated transcriptome and genome reference file for index.
-    NOTE: the genome targets (decoys) should come after the transcriptome targets in the reference
+    NOTE: the genome targets (decoys) should come after the transcriptome targets in the reference.
+    
+    Developer's note: mphf.bin seems to be the last large file written to disk, that is not a log file.
     '''
     
     gentrome, decoys = infiles
     
-    log = outfile + '.log'
+    outdir = outfile.replace('/mphf.bin', '')
+    log = outdir + '.log'
     
-    statement = '''salmon index -t %(gentrome)s -d %(decoys)s -p 12 -i resources/salmon_index 2> %(log)s'''
+    statement = '''salmon index -t %(gentrome)s -d %(decoys)s -p 12 -i %(outdir)s 2> %(log)s'''
     
     P.run(statement, job_threads = 12)
 
