@@ -1,2 +1,3 @@
 *.log
 *.fa.gz
+.ipynb_checkpoints
