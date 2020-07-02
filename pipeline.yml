@@ -1,0 +1,9 @@
+
+url:
+    # URL to a primary assembly genome (fasta)
+    genome: "ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz"
+    # URL to a transcript sequences (fasta)
+    transcriptome: "ftp://ftp.ensembl.org/pub/release-100/fasta/homo_sapiens/cdna/Homo_sapiens.GRCh38.cdna.all.fa.gz"
+
+genome: 
+    
