@@ -29,6 +29,22 @@ def download_genome(outfile):
     P.run(statement, to_cluster=False)
 
 
+@follows(mkdir('resources'))
+@originate('resources/transcriptome.fa.gz')
+def download_transcriptome(outfile):
+    '''
+    Downloads a copy of a transcriptome fasta file.
+    '''
+    
+    url = PARAMS['url']['transcriptome']
+    
+    log = outfile.replace('.fa.gz', '.log')
+    
+    statement = '''wget %(url)s -O %(outfile)s > %(log)s'''
+    
+    P.run(statement, to_cluster=False)
+
+
 # ---------------------------------------------------
 # Generic pipeline tasks
 def full():
