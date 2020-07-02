@@ -13,7 +13,6 @@ PARAMS = P.get_parameters(
      "pipeline.yml"])
 
 
-
 @follows(mkdir('resources'))
 @originate('resources/genome.fa.gz')
 def download_genome(outfile):
