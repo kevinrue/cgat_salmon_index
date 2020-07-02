@@ -69,6 +69,22 @@ def decoys(infiles, outfile):
     P.run(statement, to_cluster=False)
 
 
+@merge([download_genome, download_transcriptome], 'resources/gentrome.fa.gz')
+def concatenate_genome_transcriptome(infiles, outfile):
+    '''
+    Along with the list of decoys salmon also needs the concatenated transcriptome and genome reference file for index.
+    NOTE: the genome targets (decoys) should come after the transcriptome targets in the reference
+    '''
+    
+    genome, transcriptome = infiles
+    
+    log = outfile.replace('.fa.gz', '.log')
+    
+    statement = '''cat %(transcriptome)s %(genome)s 2> %(log)s > %(outfile)s'''
+    
+    P.run(statement, to_cluster=False)
+
+
 # ---------------------------------------------------
 # Generic pipeline tasks
 def full():
