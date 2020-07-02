@@ -18,6 +18,7 @@ PARAMS = P.get_parameters(
 @originate('resources/genome.fa.gz')
 def download_genome(outfile):
     '''
+    Downloads a copy of a genome fasta file.
     '''
     
     url = PARAMS['url']['genome']
@@ -26,7 +27,7 @@ def download_genome(outfile):
     
     statement = '''wget %(url)s -O %(outfile)s > %(log)s'''
     
-    P.run(statement)
+    P.run(statement, to_cluster=False)
 
 
 # ---------------------------------------------------
