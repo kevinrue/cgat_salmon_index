@@ -85,6 +85,22 @@ def concatenate_genome_transcriptome(infiles, outfile):
     P.run(statement, to_cluster=False)
 
 
+@merge([concatenate_genome_transcriptome, decoys], 'resources/salmon_index')
+def salmon_index(infiles, outfile):
+    '''
+    Along with the list of decoys salmon also needs the concatenated transcriptome and genome reference file for index.
+    NOTE: the genome targets (decoys) should come after the transcriptome targets in the reference
+    '''
+    
+    gentrome, decoys = infiles
+    
+    log = outfile + '.log'
+    
+    statement = '''salmon index -t %(gentrome)s -d %(decoys)s -p 12 -i resources/salmon_index 2> %(log)s'''
+    
+    P.run(statement, job_threads = 12)
+
+
 # ---------------------------------------------------
 # Generic pipeline tasks
 def full():
