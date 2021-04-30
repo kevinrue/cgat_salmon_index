@@ -104,6 +104,26 @@ def salmon_index(infiles, outfile):
     P.run(statement, job_threads = 12)
 
 
+    
+FASTQ_files = glob.glob('')
+
+@collate(FASTQ_files, r'')
+def salmon_alevin():
+    '''
+    '''
+    
+    statement = '''salmon alevin
+        -l ISR
+        -i {params.index}
+        -1 {input.fastq1} -2 {input.fastq2}
+        -o results/alevin/{wildcards.sample} -p {params.threads} --tgMap {params.tgmap}
+        --chromium --dumpFeatures
+        {params.cells_option}
+        2> {log.stderr}
+    '''
+    
+    P.run(statement, job_threads = 12)
+
 # ---------------------------------------------------
 # Generic pipeline tasks
 def full():
